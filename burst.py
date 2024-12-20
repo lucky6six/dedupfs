@@ -140,8 +140,8 @@ def simulate_deduplication_zfs(directories, chunk_size=CHUNK_SIZE):
     :return: ZFS 风格的去重率
     """
     global block_storage
-    global block_simhash_storage
-    global sf_to_block
+    global hhash_to_block
+    global thash_to_block
     seen_blocks = set()  # 存储已见过的块的哈希值
     total_bytes = 0      # 处理的字节总数 (相当于 ZFS 中的 ALLOC)
     unique_bytes = 0     # 唯一字节数 (相当于 ZFS 中的 DEDUP)

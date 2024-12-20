@@ -11,7 +11,7 @@ NUM_CHUNKS = FILE_SIZE // CHUNK_SIZE #
 NUM_VERSIONS = 17  # 数据集的版本数量
 SELECTED_BLOCKS = NUM_CHUNKS // 4  # 选择 1/4 的块，即 8192/128 个块
 MODIFY_SIZE = 1024  # 每个选中块中修改 1KB 数据
-DATASET_DIR = "mini-art-based1"  # 数据集保存路径
+DATASET_DIR = "test"  # 数据集保存路径
 
 # 创建一个目录用于存储生成的文件
 if not os.path.exists(DATASET_DIR):
@@ -96,7 +96,7 @@ def generate_backup_artificial_dataset():
     
     # 生成后续版本
     for version in range(2, NUM_VERSIONS + 1):
-        previous_version_file = os.path.join(DATASET_DIR, f"version_1.bin")
+        previous_version_file = os.path.join(DATASET_DIR, f"version_{version - 1}.bin")
         create_new_version(version, previous_version_file)
         print(f"Version {version} created.")
 

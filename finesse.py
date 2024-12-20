@@ -7,7 +7,7 @@ import time
 # import xxhash
 import argparse
 
-CHUNK_SIZE = 1024 * 4  # 4KB
+CHUNK_SIZE = 1024 * 8  # 4KB
 
 # 存储文件块的原始数据
 block_storage = {}
