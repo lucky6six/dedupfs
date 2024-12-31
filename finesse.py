@@ -167,7 +167,7 @@ def simulate_deduplication_zfs(directories, chunk_size=CHUNK_SIZE):
                                 ref_chunk = sf_to_block[item_sf]
                                 # print(item_sf)
                                 diff_size = compute_difference(chunk, ref_chunk)
-                                print(diff_size)
+                                # print(diff_size)
                                 modified_bytes += diff_size
                                 flag = True
                                 break

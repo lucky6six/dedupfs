@@ -51,6 +51,8 @@ def simulate_deduplication_zfs(directories, chunk_size=CHUNK_SIZE):
         
         # 使用 os.walk 遍历目录及其子目录
         for root, dirs, files in os.walk(directory):
+            dirs.sort()  # 排序以确保一致性
+            files.sort()
             for file in files:
                 file_path = os.path.join(root, file)
                 print(f"Processing file: {file_path}")

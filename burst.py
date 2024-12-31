@@ -32,7 +32,8 @@ def read_file_into_chunks(file_path, chunk_size=CHUNK_SIZE):
                 break
             
             if len(chunk) < chunk_size:
-                break
+                #填充0
+                chunk += b'\0' * (chunk_size - len(chunk))
             
             yield chunk
 
@@ -129,7 +130,7 @@ def compute_difference(chunk1, chunk2):
     # 计算时间差
     elapsed_time = end_time - start_time
     time_diff += elapsed_time
-    print(common_prefix_len, common_suffix_len, diff_size)
+    # print(common_prefix_len, common_suffix_len, diff_size)
     return diff_size
 
 def simulate_deduplication_zfs(directories, chunk_size=CHUNK_SIZE):
@@ -153,6 +154,8 @@ def simulate_deduplication_zfs(directories, chunk_size=CHUNK_SIZE):
         
         # 使用 os.walk 遍历目录及其子目录
         for root, dirs, files in os.walk(directory):
+            dirs.sort()  # 排序以确保一致性
+            files.sort()
             for file in files:
                 file_path = os.path.join(root, file)
                 print(f"Processing file: {file_path}")
