@@ -59,7 +59,7 @@ def save_output_to_file(directory, file_type, block_size_kb, head_rate, output,i
 def get_parser():
     parser = argparse.ArgumentParser(description="接受一个文件目录并列出其中的文件。") 
     # 接受一个目录路径参数
-    parser.add_argument('-d','--directory', type=str, required=True,help="要处理的目录路径")
+    parser.add_argument('-d','--directory', type=str, help="要处理的目录路径")
     parser.add_argument('-c','--clear',  action='store_true', help="清空目录")
     return parser
 
@@ -67,7 +67,7 @@ def main():
     #推荐数据集
     '''
     8KB块
-    toolcode:  gdb gcc openjdk nodejs各版本
+    toolcode:  gdb gcc 各版本
     lnxk linux kernel 各版本源码
     lnxtar linux kernel 各版本源码tar包
     vmi 虚拟机镜像
@@ -77,27 +77,28 @@ def main():
     
     
     # 设置不同的参数组合
-    directories = ["sim","sim_base1","toolcode","vmi","webh","lnxk","lnxtar"]
-    blocksize = [4,8,16,128]
+    # directories = ["webh","sim","sim_base1","toolcode","toolcode-tar","lnxk","lnxtar","vmi"]
+    directories = ["webhttrack","vmi"]
+    blocksize = [8,4,16,64]
     # head_rate = [4,8,16]
     start_time = time.time()
     parser = get_parser()
     args = parser.parse_args()
     if args.clear:
-        subprocess.run(["rm", "-rf", "result"])
+        subprocess.run(["rm", "-rf", f"result_{directory}"])
         return
-    directory = args.directory
-    run_fs_script(directory, file_type="dedup", block_size_kb=8)
-    run_fs_script(directory, file_type="burst", block_size_kb=8, head_rate=8)
-    run_fs_script(directory, file_type="burst", block_size_kb=8, head_rate=8,is_detect=True)
-    run_fs_script(directory, file_type="fin", block_size_kb=8)
+    # directory = args.directory
+    # run_fs_script(directory, file_type="dedup", block_size_kb=8)
+    # run_fs_script(directory, file_type="burst", block_size_kb=8, head_rate=8)
+    # run_fs_script(directory, file_type="burst", block_size_kb=8, head_rate=8,is_detect=True)
+    # run_fs_script(directory, file_type="fin", block_size_kb=8)
     
-    # for directory in directories:
-    #     for block in blocksize:
-    #         run_fs_script(directory, file_type="dedup", block_size_kb=block)
-    #         run_fs_script(directory, file_type="burst", block_size_kb=block, head_rate=8)
-    #         run_fs_script(directory, file_type="burst", block_size_kb=block, head_rate=8,is_detect=True)
-    #         run_fs_script(directory, file_type="fin", block_size_kb=block)
+    for directory in directories:
+        for block in blocksize:
+            run_fs_script(directory, file_type="dedup", block_size_kb=block)
+            run_fs_script(directory, file_type="burst", block_size_kb=block, head_rate=8)
+            run_fs_script(directory, file_type="burst", block_size_kb=block, head_rate=8,is_detect=True)
+            run_fs_script(directory, file_type="fin", block_size_kb=block)
     
     end_time = time.time()
     print(f"Total execution time: {end_time - start_time:.2f} seconds")

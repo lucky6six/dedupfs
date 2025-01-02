@@ -1,0 +1,7 @@
+代码执行时间: 51.73 秒
+计算时间: 25.51 秒
+throughput: 129.48 MB/s
+Total bytes processed (ALLOC): 6698.31 MB
+Unique bytes after deduplication (DEDUP): 2418.38 MB
+Modified bytes (for incremental storage): 23.61 MB
+Delta Deduplication rate (for incremental storage): 2.74

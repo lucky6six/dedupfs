@@ -135,28 +135,28 @@ def compute_difference_burst(chunk1, chunk2):
     start_time = time.time()
     size1 = len(chunk1)
     size2 = len(chunk2)
-    if size1 < size2:
-        chunk_tmp = chunk1
-        chunk1 = chunk2
-        chunk2 = chunk_tmp
-        size_tmp = size1
-        size1 = size2
-        size2 = size_tmp
+    # if size1 < size2:
+    #     chunk_tmp = chunk1
+    #     chunk1 = chunk2
+    #     chunk2 = chunk_tmp
+    #     size_tmp = size1
+    #     size1 = size2
+    #     size2 = size_tmp
     # print(size1,size2)
     # 1. 计算公共前缀长度
     common_prefix_len = 0
-    while common_prefix_len < size2 and chunk1[common_prefix_len] == chunk2[common_prefix_len]:
+    min_size = min(size1, size2)
+    max_size = max(size1, size2)
+    while common_prefix_len < min_size and chunk1[common_prefix_len] == chunk2[common_prefix_len]:
         common_prefix_len += 1
-    chunk1 = chunk1[common_prefix_len:size1]
-    chunk2 = chunk2[common_prefix_len:size2]
-    size1 = size1 - common_prefix_len
-    size2 = size2 - common_prefix_len
+ 
     # 2. 计算公共后缀长度
     common_suffix_len = 0
-    while common_suffix_len < size2 and chunk1[size1 - common_suffix_len - 1] == chunk2[size2 - common_suffix_len - 1]:
+    reminder = min_size - common_prefix_len
+    while common_suffix_len < reminder and chunk1[size1 - common_suffix_len - 1] == chunk2[size2 - common_suffix_len - 1]:
         common_suffix_len += 1
     # 3. 计算去除公共前缀和公共后缀后的非公共部分大小,即burst大小
-    diff_size = size1 - common_suffix_len
+    diff_size = max_size - common_suffix_len - common_prefix_len
     # print(diff_size,common_prefix_len,common_suffix_len)
      # 获取当前时间
     end_time = time.time()
