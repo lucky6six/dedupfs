@@ -67,41 +67,38 @@ def main():
     #推荐数据集
     '''
     8KB块
-    toolcode:  gdb gcc 各版本
+    toolcode:  gdb gcc 各版本 源码及tar包
     lnxk linux kernel 各版本源码
     lnxtar linux kernel 各版本源码tar包
     vmi 虚拟机镜像
-    web httrack下载的网站
+    vmb 虚拟机5备份
+    webhttrack  下载的大学网站部份(web-archive)
+    webh 大学网站网页历史
     sim  synthetic backups by simulating  file create/delete/modify operations
     '''
     
     
     # 设置不同的参数组合
-    # directories = ["webh","sim","sim_base1","toolcode","toolcode-tar","lnxk","lnxtar","vmi"]
-    directories = ["webhttrack","vmi"]
-    blocksize = [8,4,16,64]
+    # 
+    directories = ["webh","webhttrack","testdocker","lnxk","lnxtar","toolcode","toolcode-tar","sim","sim_base1"]
+    blocksize = [4,8,16]
     # head_rate = [4,8,16]
-    start_time = time.time()
     parser = get_parser()
     args = parser.parse_args()
     if args.clear:
         subprocess.run(["rm", "-rf", f"result_{directory}"])
         return
-    # directory = args.directory
-    # run_fs_script(directory, file_type="dedup", block_size_kb=8)
-    # run_fs_script(directory, file_type="burst", block_size_kb=8, head_rate=8)
-    # run_fs_script(directory, file_type="burst", block_size_kb=8, head_rate=8,is_detect=True)
-    # run_fs_script(directory, file_type="fin", block_size_kb=8)
     
     for directory in directories:
         for block in blocksize:
-            run_fs_script(directory, file_type="dedup", block_size_kb=block)
-            run_fs_script(directory, file_type="burst", block_size_kb=block, head_rate=8)
-            run_fs_script(directory, file_type="burst", block_size_kb=block, head_rate=8,is_detect=True)
-            run_fs_script(directory, file_type="fin", block_size_kb=block)
-    
-    end_time = time.time()
-    print(f"Total execution time: {end_time - start_time:.2f} seconds")
+            # run_fs_script(directory, file_type="dedup", block_size_kb=block)
+            # run_fs_script(directory, file_type="burst", block_size_kb=block, head_rate=8)
+            # run_fs_script(directory, file_type="burst", block_size_kb=block, head_rate=8,is_detect=True)
+            # run_fs_script(directory, file_type="fin", block_size_kb=block)
+            run_fs_script(directory, file_type="gear", block_size_kb=block)
+            run_fs_script(directory, file_type="odess", block_size_kb=block)
+
+
 
 if __name__ == "__main__":
     main()
