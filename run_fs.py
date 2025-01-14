@@ -95,8 +95,8 @@ def main():
             # run_fs_script(directory, file_type="burst", block_size_kb=block, head_rate=8)
             # run_fs_script(directory, file_type="burst", block_size_kb=block, head_rate=8,is_detect=True)
             # run_fs_script(directory, file_type="fin", block_size_kb=block)
-            run_fs_script(directory, file_type="gear", block_size_kb=block)
-            run_fs_script(directory, file_type="odess", block_size_kb=block)
+            run_fs_script(directory, file_type="odess1", block_size_kb=block)
+            run_fs_script(directory, file_type="odess2", block_size_kb=block)
 
 
 

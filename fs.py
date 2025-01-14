@@ -268,7 +268,7 @@ def simulate_deduplication(directory, chunk_size, type_of_fs):
                 if chunk_hash in seen_blocks:
                     continue
                 # 查找相似块
-                if(type_of_fs == "gear"):
+                if(type_of_fs == "odess1"):
                     flag = False
                     sf_of_chunk = set()
                     
@@ -309,7 +309,7 @@ def simulate_deduplication(directory, chunk_size, type_of_fs):
                 #         continue
                 
                 
-                if(type_of_fs == "odess"):
+                if(type_of_fs == "odess2"):
                     flag = False
                     sf_of_chunk = set()
                     item_sfs = get_gear_super_feature(chunk,size)
@@ -389,12 +389,12 @@ def simulate_deduplication(directory, chunk_size, type_of_fs):
                     for sf in sf_of_chunk:
                         sf_to_block[sf] = chunk
                         # print(sf)
-                if(type_of_fs == "gear"):
+                if(type_of_fs == "odess1"):
                     for sf in sf_of_chunk:
                         sf_to_block[sf] = chunk
                         # print(sf)
                     # print(sf_to_block)
-                if(type_of_fs == "odess" or type_of_fs == "fin+"):
+                if(type_of_fs == "odess2" or type_of_fs == "fin+"):
                     for sf in sf_of_chunk:
                         # print(sf)
                         sf_to_block[sf] = chunk
@@ -415,7 +415,7 @@ def get_parser():
     parser = argparse.ArgumentParser(description="接受一个文件目录并列出其中的文件。") 
     # 接受一个目录路径参数
     parser.add_argument('-d','--directory', type=str, required=True,help="要处理的目录路径")
-    parser.add_argument('-t','--type', type=str, required=True,help="使用的文件系统类型,dedup,burst,fin,gear,odess,fin+其他值默认为dedup")
+    parser.add_argument('-t','--type', type=str, required=True,help="使用的文件系统类型,dedup,burst,fin,odess1(gear),odess2,fin+其他值默认为dedup")
     parser.add_argument('-b','--block_size_kb', type=int,required=True, help="以kb为单位的块大小")
     parser.add_argument('-r','--head_rate', type=int, help="块的头部大小占比,1/n")
     parser.add_argument('-i','--is_detect',action='store_true', help="burst启用detect")
